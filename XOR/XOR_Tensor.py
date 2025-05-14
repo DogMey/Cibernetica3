@@ -1,6 +1,5 @@
 # Importar las librerías necesarias
 import tensorflow as tf # La biblioteca principal de TensorFlow
-from tensorflow import keras # Keras es la API de alto nivel integrada en TensorFlow, ideal para construir redes neuronales
 from tensorflow.keras.layers import Dense # Importar el tipo de capa densa (totalmente conectada)
 from tensorflow.keras.models import Sequential # Importar el modelo Sequential para construir la red capa por capa
 from tensorflow.keras.optimizers import SGD # Importar el optimizador Descenso de Gradiente Estocástico (SGD)
@@ -10,34 +9,24 @@ import numpy as np # Usado para manejar los datos y redondear la salida
 
 # --- Preparación de Datos ---
 # Definir los datos de entrada (entradas XOR)
-# En TensorFlow/Keras, al igual que en PyTorch, los datos suelen tener la forma (batch_size, features)
-# Usamos un arreglo de numpy para definir los datos fácilmente.
 P = np.array([[0, 0],
               [0, 1],
               [1, 0],
               [1, 1]], dtype=np.float32) # Forma (4 muestras, 2 características)
 
 # Definir las salidas esperadas (objetivo) (salidas XOR)
-# Usamos un arreglo de numpy.
 T = np.array([[0],
               [1],
               [1],
               [0]], dtype=np.float32) # Forma (4 muestras, 1 salida)
 
 # --- Definición de la Red ---
-# Crear un modelo Sequential
-# Este es un modelo lineal que apila capas una tras otra
+# Crear un modelo Sequential; Este es un modelo lineal que apila capas una tras otra
 model = Sequential([
     # Primera capa: la capa oculta
-    # Dense es una capa totalmente conectada.
-    # Tiene 3 neuronas (units=3) como en el ejemplo de MATLAB.
-    # Usa la función de activación 'tanh' (equivalente a 'tansig' en MATLAB).
-    # input_shape=(2,) especifica la forma de la entrada para la primera capa (2 características).
     Dense(units=3, activation='tanh', input_shape=(2,)),
 
     # Segunda capa: la capa de salida
-    # Tiene 1 neurona (units=1) para la salida XOR.
-    # Usa la función de activación 'tanh' para coincidir con el ejemplo de MATLAB.
     Dense(units=1, activation='tanh')
 ])
 
@@ -113,8 +102,6 @@ print('\nSalidas de la red redondeadas:')
 print(np.round(Y).T)
 
 # Calcular y mostrar el rendimiento (Pérdida MSE final)
-# La pérdida final suele ser el último valor reportado en el historial de entrenamiento.
-# Opcionalmente, puedes evaluar explícitamente: loss, mse = model.evaluate(P, T, verbose=0)
 final_loss = history.history['loss'][-1] # Obtener el último valor de pérdida del historial
 print('\nRendimiento (Pérdida MSE Final):')
 print(final_loss)
